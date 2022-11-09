@@ -1,14 +1,20 @@
 import sys
 
+def main():
+    file = open("caso1.txt", "r")
+    
+    for()
+
+class Graph:
+    graph = {}
+
+    def build_graph(graph):
+        nodes = []
 
 
 
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
-        
+
+
 class Solution:
     def pathSum(self, root: TreeNode, targetSum: int) -> List[List[int]]:
         def dfs(root, targetSum, path):
