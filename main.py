@@ -5,7 +5,10 @@ def main():
     # my_dir.chdir('../TrabalhoDois')
     # for f in my_dir.listdir():    
     #     print(f)
-    my_graph = {}
+
+    myGraph = {}
+    listForGraph = []
+
     with open('../TrabalhoDois/caso1.txt', 'r') as file:
         
         f = file.readlines()
@@ -19,11 +22,16 @@ def main():
     for line in f:
 
         words = line.replace('\n', '').split(' -> ')
+        key = words[0]
+        value = words[1]
+        myGraph.setdefault(key, []).extend(value)
+        if value not in myGraph:
+            myGraph.setdefault(value, [])
+        myGraph[words[0]] = words[1]
         print(words)
-        a = words[0]
-        b = words[1]
-        print(a,b)
+        #print(a,b)
 
+    print(myGraph)
 #class Graph:
 #    graph = {}
 #
