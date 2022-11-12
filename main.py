@@ -1,15 +1,38 @@
 import sys
 import os as my_dir
 
+
+#class Graph:
+
+myGraph = {}
+#listForGraph = []
+
+class Vertex:
+    #connections = []
+    def __init__(self, name):
+        self.name = name
+        self.connections = []
+    
+    def addConnection(self, name):
+        self.connections.append(name)
+
+
+
+def __init__(self, vertexes):
+    self.vertexes = {}
+
+def addInGraph(self, dict, vertex, connection):
+    if dict[vertex] == None:
+        dict[vertex] = Vertex(vertex)
+    dict[vertex].addConnetion(connection)
+
 def main():
     # my_dir.chdir('../TrabalhoDois')
     # for f in my_dir.listdir():    
     #     print(f)
 
-    myGraph = {}
-    listForGraph = []
 
-    with open('../TrabalhoDois/caso1.txt', 'r') as file:
+    with open('caso1.txt', 'r') as file:
         
         f = file.readlines()
 
@@ -24,10 +47,15 @@ def main():
         words = line.replace('\n', '').split(' -> ')
         key = words[0]
         value = words[1]
-        myGraph.setdefault(key, []).extend(value)
+        if key not in myGraph:
+            #valueList = [value]
+            print(value)
+            myGraph[key] = []
+
+        myGraph[key].append(value)
+
         if value not in myGraph:
             myGraph.setdefault(value, [])
-        myGraph[words[0]] = words[1]
         print(words)
         #print(a,b)
 
