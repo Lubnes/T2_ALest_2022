@@ -15,8 +15,6 @@ class Vertex:
     def add(self, name):
         self.connections.append(name)
 
-
-
 # def __init__(self, vertexes):
 #     self.vertexes = {}
 
