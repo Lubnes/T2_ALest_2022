@@ -1,92 +1,57 @@
-import sys
-import os as my_dir
+from graph import Vertex
 
-
-#class Graph:
 
 myGraph = {}
-#listForGraph = []
 
-class Vertex:
-    #connections = []
-    def __init__(self, name):
-        self.name = name
-        self.connections = []
+with open('caso1.txt', 'r') as file:
     
-    def addConnection(self, name):
-        self.connections.append(name)
+    f = file.readlines()
 
 
 
-def __init__(self, vertexes):
-    self.vertexes = {}
+for line in f:
 
-def addInGraph(self, dict, vertex, connection):
-    if dict[vertex] == None:
-        dict[vertex] = Vertex(vertex)
-    dict[vertex].addConnetion(connection)
+    words = line.replace('\n', '').split(' -> ')
+    key = words[0]
+    value = words[1]
+    if key not in myGraph:
+        #valueList = [value]
+        #print(value)
+        myGraph[key] = []
 
-def main():
-    # my_dir.chdir('../TrabalhoDois')
-    # for f in my_dir.listdir():    
-    #     print(f)
+    myGraph[key].append(value)
 
+    if value not in myGraph:
+        myGraph.setdefault(value, [])
+    #print(words)
 
-    with open('caso1.txt', 'r') as file:
-        
-        f = file.readlines()
+print(myGraph)
 
-        # while r != None:
-        #     print(r, end = '')
-        #     r = file.readline()
+# parent = {s: None}
+# def dfs(adjacencies, start):
+#     for v in adjacencies[s]:
+#         if v not in parent:
+#             parent[v] = s
+#             dfs(adjacencies, s)
 
+color={}
+parent={}
+dfs_output={}
+#inicio 
+for node in myGraph.keys():
+    color [node]= "branco"
+    parent[node]= "none"
+print(color)
+print(parent)
+print(myGraph.keys())
 
-    
-    for line in f:
+def dfs(vertice):
+    color[vertice]="cinza"
+    dfs_output.append(vertice)
+    for sabor in myGraph[vertice]:#sabor adjacente ao vertice 
+        if color[sabor] == "branco":
+            parent[sabor]=vertice
+            dfs(sabor)
+    color[vertice] = "preto"
 
-        words = line.replace('\n', '').split(' -> ')
-        key = words[0]
-        value = words[1]
-        if key not in myGraph:
-            #valueList = [value]
-            print(value)
-            myGraph[key] = []
-
-        myGraph[key].append(value)
-
-        if value not in myGraph:
-            myGraph.setdefault(value, [])
-        print(words)
-        #print(a,b)
-
-    print(myGraph)
-#class Graph:
-#    graph = {}
-#
-#    def build_graph(graph):
-#        nodes = []
-
-main()
-
-
-# class Solution:
-#     def pathSum(self, root: TreeNode, targetSum: int) -> List[List[int]]:
-#         def dfs(root, targetSum, path):
-#             if root == None: return None
-            
-#             targetSum -= root.val
-#             path.append(root.val)
-            
-#             if root.left == None and root.right == None:
-#                 if targetSum == 0:
-#                     ans.append(path.copy())
-                
-#             else:
-#                 dfs(root.left, targetSum, path)
-#                 dfs(root.right, targetSum, path)
-            
-#             path.pop()
-            
-#         ans = []    
-#         dfs(root, targetSum, [])
-#         return ans
+dfs("flocos")      
