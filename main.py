@@ -53,6 +53,10 @@ print("Dicionário:\n", myGraph)
 #             dfs(sabor)
 #     color[vertice] = "preto"
 
+# dfs("flocos")
+
+combinacoes = []
+
 keys = myGraph.keys()
 values = myGraph.values()
 
