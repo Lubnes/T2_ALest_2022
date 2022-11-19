@@ -3,9 +3,6 @@ import os as my_dir
 
 #class Graph:
 
-
-#listForGraph = []
-
 class Vertex:
     #connections = []
     def __init__(self, name):
@@ -14,6 +11,11 @@ class Vertex:
     
     def add(self, name):
         self.connections.append(name)
+
+class Graph:
+    def __init__(self, dict):
+        self.dict = dict 
+    
 
 # def __init__(self, vertexes):
 #     self.vertexes = {}
