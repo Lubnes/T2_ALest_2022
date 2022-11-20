@@ -85,15 +85,19 @@ def dfs_visit(vertex, graph):
             dfs_visit(v, visited)
             #calcula(sorvetes)
 
-def firstOnes(myGraph):
+def firstOnes():
+    k = set(())
     v = set(())
-    first = set(())
+    #first = set(())
     for i in myGraph:
-        v.add(i)
-        k = first.union(i)
-        first = k.difference(v)
-        print(first)
-    return list(first)
+        #print("\ni: ", i)
+        v.update(myGraph[i])
+        #print("values: ", v)
+        k.add(i)
+        #print("resp: ", k)
+        k.difference_update(v)
+        print(k,"->", v)
+    return list(k)
         
         
 
@@ -117,7 +121,8 @@ for i in myGraph:
     # print("Tipo myGraph[i]: ", type(myGraph[i]))
     # print("Tipo myGraph.get(i): ", type(myGraph.get(i)))
 
-print(firstOnes(myGraph))
+print(firstOnes())
+print(keys)
 # for i in myGraph:
 #     print("key - value:")
 #     print("key: ", i, " --> ", "value: ", myGraph.get(i))
