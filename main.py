@@ -60,32 +60,36 @@ combinacoes = []
 keys = myGraph.keys()
 values = myGraph.values()
 
-#visited = []
-visited = set(())
 
-#combs = []
-combs = set(())
-#combs_three = []      # [...,i,j,k,...]
-#combs_two = []
-
-def dfs(myGraph):
-    for k in keys:
-        if k not in visited:
-            dfs_visit(k, myGraph)
-    print("Combinações de sorvetes: ", combs)
+def dfs(graph):
+    #visited = []
+    visited = set(())
+    #combs = []
+    combinations = set(())
+    #combinations_three = []      # [...,i,j,k,...]
+    #combinations_two = []
+    combine = []
+    comb_count = 0
+    objective = firstOnes(graph)
+    for i in objective:
+        dfs_visit(i, graph, visited, combine, comb_count, combinations)
+        # if k not in visited:
+        #     dfs_visit(k, myGraph)
+    print("Combinações de sorvetes: ", combinations)
     
-def dfs_visit(vertex, graph):
-    sorvetes = [] #continuar
+def dfs_visit(vertex, graph, visited, combine, comb_count, combinations):
     #if vertex not in visited:
         #visited.add(vertex)
-    for v in myGraph[vertex]:
-        print(v)
-        if v not in visited:
-            sorvetes.append(v)
-            dfs_visit(v, visited)
-            #calcula(sorvetes)
+    visited.add(vertex)
+    for j in graph[vertex]:
+        print(vertex)
+        if j not in visited:
+            combine.add(j)
+            dfs_visit(vertex, graph, visited, combine, comb_count)
+        combine.pop(comb_count) 
+        calcula(combine, combinations)
 
-def firstOnes():
+def firstOnes(myGraph):
     k = set(())
     v = set(())
     #first = set(())
@@ -94,24 +98,22 @@ def firstOnes():
         v.update(myGraph[i])
         #print("values: ", v)
         k.add(i)
-        #print("resp: ", k)
+        print("\nIndex",i,": ", k,"-->", v)
         k.difference_update(v)
-        print(k,"->", v)
+        print("\nNew key(s): ", k)
     return list(k)
-        
-        
 
-def calcula(sorvetes):
+def calcula(sorvetes, combinations):
     i = 0
     j = i+1
     k = j+1
     for i in sorvetes:
         for j in sorvetes:
-            myTuple2 = tuple((i, j))
-            combs.add(myTuple2)
+            twosum = tuple((i, j))
+            combinations.add(twosum)
             for k in sorvetes:
-                myTuple3 = tuple((i, j, k))
-                combs.add(myTuple3)
+                threesum = tuple((i, j, k))
+                combinations.add(threesum) 
 
 #dfs('frutas_cristalizadas', myGraph)
 
@@ -121,7 +123,7 @@ for i in myGraph:
     # print("Tipo myGraph[i]: ", type(myGraph[i]))
     # print("Tipo myGraph.get(i): ", type(myGraph.get(i)))
 
-print(firstOnes())
+print(firstOnes(myGraph))
 print(keys)
 # for i in myGraph:
 #     print("key - value:")
