@@ -1,22 +1,20 @@
-from graph import Vertex
-
-class Vertex:
-    #connections = []
-    def __init__(self, name):
-        self.name = name
-        self.connections = []
+# class Vertex:
+#     #connections = []
+#     def __init__(self, name):
+#         self.name = name
+#         self.connections = []
     
-    def add(self, name):
-        self.connections.append(name)
+#     def add(self, name):
+#         self.connections.append(name)
 
-class Graph:
-    def __init__(self, dict):
-        self.dict = dict 
+# class Graph:
+#     def __init__(self, dict):
+#         self.dict = dict 
 
 
 myGraph = {}
 
-with open('caso1.txt', 'r') as file:
+with open('caso2.txt', 'r') as file:
     
     f = file.readlines()
 
@@ -33,79 +31,48 @@ for line in f:
 
     if value not in myGraph:
         myGraph.setdefault(value, [])
-    #print(words)
 
 print("Dicionário:\n", myGraph)
 
-graph = {'frutas_cristalizadas': set(['nata']),
-         'nata': set([]),
-         'tutti_frutti': set(['passas_ao_rum', 'abÃ³bora']),
-         'passas_ao_rum': set(['abÃ³bora']),
-         'abÃ³bora': set(['menta']),
-         'menta' : set([]),
-         'tamarindo': set(['sonho_de_valsa']),
-         'sonho_de_valsa': set([]),
-         'flocos': set(['tutti_frutti', 'tamarindo', 'sonho_de_valsa'])}
+global twosum_count
+global threesum_count
+#twosum_count = 0
+#threesum_count = 0
 
-# parent = {s: None}
-# def dfs(adjacencies, start):
-#     for v in adjacencies[s]:
-#         if v not in parent:
-#             parent[v] = s
-#             dfs(adjacencies, s)
-
-# def dfs(vertice):
-#     color[vertice]="cinza"
-#     dfs_output.append(vertice)
-#     for sabor in myGraph[vertice]:#sabor adjacente ao vertice 
-#         if color[sabor] == "branco":
-#             parent[sabor]=vertice
-#             dfs(sabor)
-#     color[vertice] = "preto"
-
-# dfs("flocos")
-
-combinacoes = []
-
-keys = myGraph.keys()
-values = myGraph.values()
-
-visited = set()
-combine = []
-combinations = set(())
-
-
-def dfs(g):
-    #visited = []       
-    #visited = set(())  DESCOMENTAR
-    #combs = []
-    #combinations = set(())
-    #combinations_three = []      # [...,i,j,k,...]
-    #combinations_two = []
-    combinez = []   
-    combine_counter = 0  
+def dfs(g):    
+    visited = set(())
+    combine = []
+    combinations = set(())
+    #combinations_three = set(())      # [...,i,j,k,...]
+    #combinations_two = set(())  
+    combine_count = 0 
+    twosum_count = 0
+    threesum_count = 0
     objective = firstOnes(g)
     for v in objective:
         print("\nIndice: ",i)
-        dfs_visit(v, g, visited, combine, combine_counter, combinations)
-    # if k not in visited:
-    #     dfs_visit(k, myGraph)
-    print("Combinações de sorvetes: ", combinations)
+        dfs_visit(v, g, visited, combine, combine_count, combinations)
+    print("\nTotal de combinações de sorvetes: ")#, combinations)
+    for e in combinations:
+        if len(e) == 2: 
+            twosum_count += 1
+        else: 
+            threesum_count += 1
+        print("\n", e)
+    print("\nTotal de combinacoes de 2 sabores: ", twosum_count)
+    print("\nTotal de combinacoes de 3 sabores: ", threesum_count)
     
-def dfs_visit(vertex, graph, visited, combine, combine_count):#, combinations): DESCOMENTAR
-    #if vertex not in visited:
-        #visited.add(vertex)
+def dfs_visit(vertex, graph, visited, combine, combine_count, combinations): 
     visited.add(vertex)
-    print("Vertex: ", vertex)
-    print("Ordem: ", combine)
     combine.append(vertex)
     combine_count += 1
+    print("\nSabor: ", vertex)
+    print("Combinacoes: ", combine)
     for j in graph[vertex]:
         if j not in visited:
-            #combine.append(j)
-            #combine_count += 1
-            dfs_visit(j, graph, visited, combine, combine_count)#, combinations)   DESCOMENTAR
-        #combine.pop(comb_count) 
+            dfs_visit(j, graph, visited, combine, combine_count, combinations)
+        elif j in visited and j not in combine:
+            dfs_visit(j, graph, visited, combine, combine_count, combinations)  
     calcula(combine, combinations)
     combine.pop(combine.index(vertex))
     combine_count -= 1
@@ -114,7 +81,6 @@ def dfs_visit(vertex, graph, visited, combine, combine_count):#, combinations): 
 def firstOnes(myGraph):
     k = set(())
     v = set(())
-    #first = set(())
     for i in myGraph:
         #print("\ni: ", i)
         v.update(myGraph[i])
@@ -133,11 +99,16 @@ def calcula(sorvetes, combinations):
         for j in range(i+1,len(sorvetes)):
             twosum = tuple((sorvetes[i], sorvetes[j]))
             combinations.add(twosum)
+            #twosum_count += 1
             print(twosum)
+            #print(twosum_count)
             for k in range(j+1, len(sorvetes)):
                 threesum = tuple((sorvetes[i], sorvetes[j], sorvetes[k]))
-                combinations.add(threesum) 
+                combinations.add(threesum)
+                #threesum_count += 1 
                 print(threesum)
+                #print(threesum_count)
+
 
 for i in myGraph:
     print("key - value:")
@@ -148,4 +119,5 @@ for i in myGraph:
 print(firstOnes(myGraph))
 objetivo = firstOnes(myGraph)
 print("\nObjevtive: ",objetivo)
-dfs_visit("flocos", graph, visited, combine, combine_count = 0)
+#dfs_visit('flocos', graph, visited, combine, combine_count = 0)
+dfs(myGraph)
