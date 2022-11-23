@@ -1,20 +1,6 @@
-# class Vertex:
-#     #connections = []
-#     def __init__(self, name):
-#         self.name = name
-#         self.connections = []
-    
-#     def add(self, name):
-#         self.connections.append(name)
-
-# class Graph:
-#     def __init__(self, dict):
-#         self.dict = dict 
-
-
 myGraph = {}
 
-with open('caso2.txt', 'r') as file:
+with open('caso5.txt', 'r') as file:
     
     f = file.readlines()
 
@@ -43,14 +29,15 @@ def dfs(g):
     visited = set(())
     combine = []
     combinations = set(())
-    #combinations_three = set(())      # [...,i,j,k,...]
-    #combinations_two = set(())  
+ 
     combine_count = 0 
     twosum_count = 0
     threesum_count = 0
+
     objective = firstOnes(g)
+
     for v in objective:
-        print("\nIndice: ",i)
+        print("\nIndice: ",v)
         dfs_visit(v, g, visited, combine, combine_count, combinations)
     print("\nTotal de combinações de sorvetes: ")#, combinations)
     for e in combinations:
@@ -86,9 +73,9 @@ def firstOnes(myGraph):
         v.update(myGraph[i])
         #print("values: ", v)
         k.add(i)
-        print("\nIndex",i,": ", k,"-->", v)
+        #print("\nIndex",i,": ", k,"-->", v)
         k.difference_update(v)
-        print("\nNew key(s): ", k)
+        #print("\nNew key(s): ", k)
     return list(k)
 
 def calcula(sorvetes, combinations):
@@ -99,25 +86,17 @@ def calcula(sorvetes, combinations):
         for j in range(i+1,len(sorvetes)):
             twosum = tuple((sorvetes[i], sorvetes[j]))
             combinations.add(twosum)
-            #twosum_count += 1
-            print(twosum)
-            #print(twosum_count)
+            #print(twosum)
             for k in range(j+1, len(sorvetes)):
                 threesum = tuple((sorvetes[i], sorvetes[j], sorvetes[k]))
                 combinations.add(threesum)
-                #threesum_count += 1 
-                print(threesum)
-                #print(threesum_count)
+                #print(threesum)
 
+# for i in myGraph:
+#     print("key - value:")
+#     print("key: ", i, " --> ", "value: ", myGraph[i])
 
-for i in myGraph:
-    print("key - value:")
-    print("key: ", i, " --> ", "value: ", myGraph[i])
-    # print("Tipo myGraph[i]: ", type(myGraph[i]))
-    # print("Tipo myGraph.get(i): ", type(myGraph.get(i)))
-
-print(firstOnes(myGraph))
-objetivo = firstOnes(myGraph)
-print("\nObjevtive: ",objetivo)
-#dfs_visit('flocos', graph, visited, combine, combine_count = 0)
+#print(firstOnes(myGraph))
+#objetivo = firstOnes(myGraph)
+#print("\nObjevtive: ", objetivo)
 dfs(myGraph)
